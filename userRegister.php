@@ -6,11 +6,10 @@ if (isset($_POST['submit'])) {
     // $mobile_no = $_POST['mobile'];
     $password = $_POST['password'];
     $cpassword = $_POST['cpassword'];
-    $code=$_POST['code'];
     require_once 'db_connect.php';
     require_once 'registerUtils.php';
 
-    if (emptyInputSignup($username, $email, $password, $cpassword,$code) !== false) {
+    if (emptyInputSignup($username, $email, $password, $cpassword) !== false) {
         header("location:userRegister.php?error=emptyinput");
         exit();
     }
@@ -24,10 +23,6 @@ if (isset($_POST['submit'])) {
     }
     if (passwordMatch($password, $cpassword) !== false) {
         header("location:userRegister.php?error=passwordDontMatch");
-        exit();
-    }
-    if (codeMatch($code) !== false) {
-        header("location:userRegister.php?error=invalidCode");
         exit();
     }
 
@@ -49,8 +44,9 @@ if (isset($_POST['submit'])) {
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap"
+        rel="stylesheet">
+
 
 </head>
 
@@ -58,19 +54,14 @@ if (isset($_POST['submit'])) {
 
 <body>
 
-    
+
     <nav>
         <a href="index.html"><img src="logon.png"></a>
-            <div class="nav-links">
-                <ul>
-                    <li><a href="index.html">HOME</a></li>
-                    <li><a href="">ABOUT</a></li>
-                    <li><a href="login.html">LOG IN</a></li>
-                    <li><a href="register.html">REGISTER</a></li>
-                    <li><a href="">CONTACT US</a></li>
-                </ul>
-
-            </div>
+        <div class="nav-links">
+            <?php
+                        include(".//userPartials/userNavList.php");
+                        ?>
+        </div>
     </nav>
 
     <div class="container">
@@ -94,14 +85,14 @@ if (isset($_POST['submit'])) {
             </div>
             <div class="form-control">
                 <label for="username">Password</label>
-                <input name="password" type="password" placeholder="Enter your password" id="password"/>
+                <input name="password" type="password" placeholder="Enter your password" id="password" />
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
                 <small>Error message</small>
             </div>
             <div class="form-control">
                 <label for="username">Password check</label>
-                <input name="cpassword" type="password" placeholder="Confirm password" id="password2"/>
+                <input name="cpassword" type="password" placeholder="Confirm password" id="password2" />
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
                 <small>Error message</small>
@@ -109,7 +100,7 @@ if (isset($_POST['submit'])) {
             <button type="submit" name="submit" class="btn">Register</button>
 
             <hr>
-            <p>Want to be a host? <a href="hostregister.html">Sign Up as Host</a></p>
+            <p>Want to be a host? <a href="hostregister.php">Sign Up as Host</a></p>
         </form>
         <?php
         if (isset($_GET["error"])) {
@@ -132,8 +123,8 @@ if (isset($_POST['submit'])) {
 
         ?>
     </div>
-    
-    <script  src="./registration.js"></script>
 
-   
+    <!-- <script  src="./registration.js"></script> -->
+
+
 </body>
